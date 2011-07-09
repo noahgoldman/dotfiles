@@ -1,3 +1,8 @@
 [user]
 	name = Noah Goldman
 	email = noahg34@gmail.com
+
+[alias]
+	st = status
+	cm = commit
+	gh = push -u origin master
