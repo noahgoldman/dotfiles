@@ -1,5 +1,3 @@
-call pathogen#runtime_append_all_bundles() 
-
 syntax enable
 colorscheme solarized
 set background=dark

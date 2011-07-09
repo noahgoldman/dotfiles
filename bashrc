@@ -22,7 +22,7 @@ done
 alias ls='ls --color=auto'
 alias ll='ls -A'
 alias de='deactivate'
-alias pr='cd ~/projects'
+alias pro='cd ~/projects'
 alias rebash='source ~/.bashrc'
 
 # Virtualenvwrapper settings
