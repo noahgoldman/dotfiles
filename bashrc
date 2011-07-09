@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-PS1='\u@\h \w\$ '
+PS1='\[\e[0;32m\]\u\[\e[m\]@\[\e[0;35m\]\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\]$ \[\e[0m\]'
 
 LOCAL_PATH=$HOME/local
 LD_LIBRARY_PATH="/opt/local/lib:/usr/local/lib:/usr/lib"
@@ -22,8 +22,9 @@ done
 alias ls='ls --color=auto'
 alias ll='ls -A'
 alias de='deactivate'
-alias pro='cd ~/projects'
+alias pro='cd ~/projects; ls'
 alias rebash='source ~/.bashrc'
+alias webserver='python -m SimpleHTTPServer 8080'
 
 # Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
