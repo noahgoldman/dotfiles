@@ -16,7 +16,7 @@ main = do
     xmonad $ defaultConfig {
         manageHook = manageDocks <+> manageHook defaultConfig,
         layoutHook = avoidStruts $ layoutHook defaultConfig,
-        terminal = "urxvt",
+        terminal = "xterm",
         logHook = dynamicLogWithPP xmobarPP
             { ppOutput = hPutStrLn xmproc
             , ppTitle = xmobarColor "green" "" . shorten 50
