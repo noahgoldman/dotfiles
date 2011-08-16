@@ -29,9 +29,11 @@ alias ll='ls -A'
 alias de='deactivate'
 alias rebash='source ~/.bashrc'
 alias webserver='python -m SimpleHTTPServer 8080'
+alias ..='cd ..'
 
 function pro {
 	cd ~/projects/$1
+    source ~/projects/$1/.pro
 	ls
 }
 
