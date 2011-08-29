@@ -1,11 +1,19 @@
 #
-# ~/.bashrc
+# ~/.zshrc
 #
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+autoload -U compinit
+autoload colors; colors;
 
-PS1='\[\e[0;32m\]\u\[\e[m\]@\[\e[0;35m\]\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\]> \[\e[0m\]'
+PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[magenta]%}%m%{$reset_color%} %{$fg[blue]%}%~>%{$reset_color%} "
+
+setopt correct_all
+
+#
+# Binds
+#
+
+bindkey -v
 
 # ----------------------------------------------------------------------
 # Script to add everythin in ~/local to PATH
@@ -27,8 +35,10 @@ done
 alias ls='ls --color=auto'
 alias ll='ls -A'
 alias de='deactivate'
-alias rebash='source ~/.bashrc'
+alias rezsh='source ~/.zshrc'
 alias webserver='python -m SimpleHTTPServer 8080'
+alias _='sudo'
+alias __='sudo !!'
 
 function pro {
 	cd ~/projects/$1
@@ -51,3 +61,12 @@ export WORKON_HOME=~/.envs
 export GOROOT=$HOME/local/go
 
 export EDITOR='vim'
+# The following lines were added by compinstall
+
+unsetopt menu_complete
+unsetopt flowcontrol
+setopt auto_menu
+setopt complete_in_word
+setopt always_to_end
+compinit
+# End of lines added by compinstall
