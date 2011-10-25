@@ -1,23 +1,33 @@
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
+import XMonad.Layout.NoBorders
+import qualified XMonad.StackSet as W
 
+myWorkspaces = ["1:term", "2:web", "3:skype", "4:vbox", "5:games", "6:pdf", "7", "8", "9"]
 
 myManageHook = composeAll
-    [ className =? "Skype" --> doFloat
+    [ isFullscreen --> doFullFloat
+    , className =? "Skype" --> doShift "3:skype"
+    , className =? "chromium" --> doShift "2:web"
+    , className =? "VirtualBox" --> doShift "4:vbox"
+    , className =? "hon-x86_64" --> doShift "5:hon"
     , manageDocks
     ]
 
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar $HOME/.xmobarrc"
     xmonad $ defaultConfig {
-        manageHook = manageDocks <+> manageHook defaultConfig,
-        layoutHook = avoidStruts $ layoutHook defaultConfig,
-        terminal = "xterm",
-        logHook = dynamicLogWithPP xmobarPP
+        workspaces = myWorkspaces 
+        , modMask = mod4Mask
+        , manageHook = myManageHook
+        , layoutHook = avoidStruts $ smartBorders $ layoutHook defaultConfig
+        , terminal = "urxvt"
+        , logHook = dynamicLogWithPP xmobarPP
             { ppOutput = hPutStrLn xmproc
             , ppTitle = xmobarColor "green" "" . shorten 50
             }

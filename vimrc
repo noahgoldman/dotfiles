@@ -2,8 +2,8 @@ call pathogen#infect()
 filetype plugin indent on
 
 syntax enable
-colorscheme solarized
 set background=dark
+colorscheme solarized
 
 set smartindent
 set tabstop=4

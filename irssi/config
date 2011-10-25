@@ -21,6 +21,7 @@ servers = (
     use_ssl = "no";
     ssl_verify = "no";
     autoconnect = "yes";
+    autosendcmd = "/msg AuthServ@Services.GameSurge.net auth Phaaze starwars34";
   },
   { address = "irc.webchat.org"; chatnet = "WebChat"; port = "6667"; },
   { address = "irc.rizon.net"; chatnet = "Rizon"; port = "6667"; },

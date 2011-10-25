@@ -32,6 +32,7 @@ done
 # ----------------------------------------------------------------------
 # Aliases
 # ----------------------------------------------------------------------
+alias l='ls'
 alias ls='ls --color=auto'
 alias ll='ls -A'
 alias de='deactivate'
@@ -39,6 +40,7 @@ alias rezsh='source ~/.zshrc'
 alias webserver='python -m SimpleHTTPServer 8080'
 alias _='sudo'
 alias __='sudo !!'
+alias xrec="xmonad --recompile"
 
 function pro {
 	cd ~/projects/$1
@@ -55,7 +57,7 @@ alias gp='git push'
 
 # Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
-[ -f /usr/local/bin/virtualenvwrapper.sh ] && source //usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper.sh
 
 # Go settings
 export GOROOT=$HOME/local/go
