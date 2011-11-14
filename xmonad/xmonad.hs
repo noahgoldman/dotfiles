@@ -8,14 +8,14 @@ import System.IO
 import XMonad.Layout.NoBorders
 import qualified XMonad.StackSet as W
 
-myWorkspaces = ["1:term", "2:web", "3:skype", "4:vbox", "5:games", "6:pdf", "7", "8", "9"]
+myWorkspaces = ["1:term", "2:web", "3:skype", "4:music", "5:games", "6:pdf", "7", "8", "9"]
 
 myManageHook = composeAll
     [ isFullscreen --> doFullFloat
     , className =? "Skype" --> doShift "3:skype"
     , className =? "chromium" --> doShift "2:web"
-    , className =? "VirtualBox" --> doShift "4:vbox"
     , className =? "hon-x86_64" --> doShift "5:hon"
+    , className =? "music" --> doShift "4:irc"
     , manageDocks
     ]
 
