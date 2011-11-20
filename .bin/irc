@@ -1,0 +1,1 @@
+urxvt -T irssi -e ssh liam -Xt screen -aAdr
