@@ -5,7 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-PS1='\[\e[0;32m\]\u\[\e[m\]@\[\e[0;35m\]\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\]> \[\e[0m\]'
+# Prompt
+PS1='\[\e[0;32m\]\u\[\e[m\]@\[\e[0;35m\]\h\[\e[m\] \[\e[0;34m\]\w\[\e[m\]> \[\e[0m\]'
 
 # ----------------------------------------------------------------------
 # Script to add everythin in ~/local to PATH
@@ -21,33 +22,28 @@ for i in $HOME/local/*; do
     [ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
 done
 
+PATH="$HOME/.bin:${PATH}"
 # ----------------------------------------------------------------------
 # Aliases
 # ----------------------------------------------------------------------
+alias l='ls'
 alias ls='ls --color=auto'
 alias ll='ls -A'
 alias de='deactivate'
-alias rebash='source ~/.bashrc'
 alias webserver='python -m SimpleHTTPServer 8080'
-alias ..='cd ..'
+alias rebash='source ~/.bashrc'
 
-function pro {
+function p {
 	cd ~/projects/$1
-    source ~/projects/$1/.pro
-	ls
-	source ~/projects/$1/.pro
+    [ -f ~/projects/$1/.p ] && source ~/projects/$1/.p
 }
 
 # Git
 alias gs='git status'
-alias gc='git commit -a'
-alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
-alias gd='git diff'
-alias gp='git push'
 
 # Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
-[ -f /usr/local/bin/virtualenvwrapper.sh ] && source //usr/local/bin/virtualenvwrapper.sh
+[ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 
 # Go settings
 export GOROOT=$HOME/local/go

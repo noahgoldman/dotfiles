@@ -13,7 +13,7 @@ myWorkspaces = ["1:term", "2:web", "3:skype", "4:music", "5:games", "6:pdf", "7"
 myManageHook = composeAll
     [ isFullscreen --> doFullFloat
     , className =? "Skype" --> doShift "3:skype"
-    , className =? "chromium" --> doShift "2:web"
+    , className =? "Google-chrome" --> doShift "2:web"
     , className =? "hon-x86_64" --> doShift "5:hon"
     , className =? "music" --> doShift "4:irc"
     , manageDocks
