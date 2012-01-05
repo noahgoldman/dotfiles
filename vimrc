@@ -12,6 +12,7 @@ set expandtab
 set number
 set nowrap
 set pastetoggle=<F2>
+set visualbell
 
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype haskell setlocal ts=4 sw=4 expandtab

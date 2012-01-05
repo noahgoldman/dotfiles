@@ -32,10 +32,17 @@ alias ll='ls -A'
 alias de='deactivate'
 alias webserver='python -m SimpleHTTPServer 8080'
 alias rebash='source ~/.bashrc'
+alias vibash='vim ~/.bashrc'
+alias json='python -mjson.tool'
+alias xrec='xmonad --recompile'
 
-function p {
+function pro {
 	cd ~/projects/$1
-    [ -f ~/projects/$1/.p ] && source ~/projects/$1/.p
+    if [ -f ~/projects/$1/.pro ] 
+        then
+            source ~/projects/$1/.pro
+    fi
+    ls
 }
 
 # Git
@@ -43,7 +50,10 @@ alias gs='git status'
 
 # Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
-[ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
+if [ -f /usr/local/bin/virtualenvwrapper.sh ] 
+    then 
+        source /usr/local/bin/virtualenvwrapper.sh 
+fi
 
 # Go settings
 export GOROOT=$HOME/local/go

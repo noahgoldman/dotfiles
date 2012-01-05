@@ -58,7 +58,11 @@ alias gp='git push'
 
 # Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
-source /usr/local/bin/virtualenvwrapper.sh
+
+if [ -f /usr/local/bin/virtualenvwrapper.sh ] 
+    then 
+        source /usr/local/bin/virtualenvwrapper.sh 
+fi
 
 # Go settings
 export GOROOT=$HOME/local/go
