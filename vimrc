@@ -5,6 +5,11 @@ syntax enable
 set background=dark
 colorscheme solarized
 
+" Powerline settings
+let g:powerline_symbols='fancy'
+
+set nocompatible
+set laststatus=2
 set smartindent
 set tabstop=4
 set shiftwidth=4
