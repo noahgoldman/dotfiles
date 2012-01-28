@@ -29,6 +29,7 @@ PATH="$HOME/.bin:${PATH}"
 alias l='ls'
 alias ls='ls --color=auto'
 alias ll='ls -A'
+alias activate='source env/bin/activate'
 alias de='deactivate'
 alias webserver='python -m SimpleHTTPServer 8080'
 alias rebash='source ~/.bashrc'
@@ -47,6 +48,7 @@ function pro {
 
 # Git
 alias gs='git status'
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 
 # Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
