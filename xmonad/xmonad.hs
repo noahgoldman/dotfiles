@@ -14,10 +14,13 @@ myManageHook = composeAll
     [ isFullscreen --> doFullFloat
     , className =? "Skype" --> doShift "3:skype"
     , className =? "Chromium" --> doShift "2:web"
-    , className =? "hon-x86_64" --> doShift "5:hon"
+    , className =? "hon-x86_64" --> doShift "5:games"
     , className =? "music" --> doShift "6:irc"
+    , className =? "Wine" --> doShift "5:games"
+    , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
     , manageDocks
     ]
+    where role = stringProperty "WM_WINDOW_RULE"
 
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar $HOME/.xmobarrc"

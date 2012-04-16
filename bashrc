@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 # Prompt
-PS1='\[\e[0;32m\]\u\[\e[m\]@\[\e[0;35m\]\h\[\e[m\] \[\e[0;34m\]\w\[\e[m\]> \[\e[0m\]'
+PS1='\[\e[0;32m\]\u\[\e[m\]@\[\e[0;35m\]\h\[\e[m\] \e[0;34m\]\w\[\e[m\]> \[\e[0m\]'
 
 # ----------------------------------------------------------------------
 # Script to add everythin in ~/local to PATH
@@ -36,6 +36,7 @@ alias rebash='source ~/.bashrc'
 alias vibash='vim ~/.bashrc'
 alias json='python -mjson.tool'
 alias xrec='xmonad --recompile'
+alias fics='xboard -ics -icshost freechess.org'
 
 function pro {
 	cd ~/projects/$1

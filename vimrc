@@ -8,6 +8,13 @@ colorscheme solarized
 " Powerline settings
 let g:powerline_symbols='fancy'
 
+" Some nice filename tab completion
+set wildmode=longest,list,full
+set wildmenu
+
+" Allow switching buffers without saving
+set hidden
+
 set nocompatible
 set laststatus=2
 set smartindent
@@ -23,4 +30,8 @@ autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype haskell setlocal ts=4 sw=4 expandtab
 autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
 autocmd Filetype coffee setlocal ts=2 sw=2 expandtab
-autocmd Filetype c setlocal ts=8 sw=8 expandtab
+autocmd Filetype c setlocal ts=8 sw=8 noexpandtab
+autocmd Filetype stylus setlocal ts=2 sw=2 expandtab
+
+" Arduino detection
+autocmd! BufNewFile,BufRead *.ino setlocal ft=cpp
