@@ -31,7 +31,14 @@ autocmd Filetype haskell setlocal ts=4 sw=4 expandtab
 autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
 autocmd Filetype coffee setlocal ts=2 sw=2 expandtab
 autocmd Filetype c setlocal ts=8 sw=8 noexpandtab
+autocmd Filetype cpp setlocal ts=2 sw=2 expandtab
 autocmd Filetype stylus setlocal ts=2 sw=2 expandtab
+autocmd Filetype arduino setlocal ts=2 sw=2 expandtab
+autocmd Filetype python setlocal ts=4 sw=4 expandtab
 
 " Arduino detection
-autocmd! BufNewFile,BufRead *.ino setlocal ft=cpp
+autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
+
+" Highlights lines that go over 80 characters
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/

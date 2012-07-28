@@ -29,7 +29,7 @@ for i in $HOME/local/*; do
     [ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
 done
 
-PATH="$HOME/.bin:${PATH}"
+PATH="$HOME/.bin:$HOME/.cabal/bin:${PATH}"
 # ----------------------------------------------------------------------
 # Aliases
 # ----------------------------------------------------------------------
@@ -45,8 +45,11 @@ alias xrec="xmonad --recompile"
 
 function pro {
 	cd ~/projects/$1
+    if [ -f ~/projects/$1/.pro ]
+        then
+            source ~/projects/$1/.pro
+    fi
 	ls
-	source ~/projects/$1/.pro
 }
 
 # Git

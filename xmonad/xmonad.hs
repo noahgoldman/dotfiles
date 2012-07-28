@@ -6,6 +6,7 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 import XMonad.Layout.NoBorders
+import XMonad.Hooks.EwmhDesktops
 import qualified XMonad.StackSet as W
 
 myWorkspaces = ["1:term", "2:web", "3:skype", "4:music", "5:games", "6:irc", "7", "8", "9"]
@@ -22,12 +23,18 @@ myManageHook = composeAll
     ]
     where role = stringProperty "WM_WINDOW_RULE"
 
+myStartupHook = do
+    spawn "urxvt"
+    spawn "chromium"
+
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar $HOME/.xmobarrc"
     xmonad $ defaultConfig {
         workspaces = myWorkspaces 
         , modMask = mod4Mask
+        , handleEventHook = fullscreenEventHook
         , manageHook = myManageHook
+        , startupHook = myStartupHook
         , layoutHook = avoidStruts $ smartBorders $ layoutHook defaultConfig
         , terminal = "urxvt"
         , logHook = dynamicLogWithPP xmobarPP
