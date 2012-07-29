@@ -1,0 +1,25 @@
+#!/bin/bash
+
+case $1 in
+    max)
+        sudo pm-powersave false
+        /bin/bash /usr/local/share/backlight max
+        for i in 0 1 2 3; do sudo cpufreq-set -c $i -g performance; done
+        echo "Changed to max performance mode"
+    ;;
+    norm)
+        sudo pm-powersave true
+        /bin/bash /usr/local/share/backlight night
+        for i in 0 1 2 3; do sudo cpufreq-set -c $i -g ondemand; done
+        echo "Changed to normal performance mode"
+    ;;
+    save)
+        sudo pm-powersave true
+        /bin/bash /usr/local/share/backlight night
+        sudo modprobe cpufreq_powersave
+        for i in 0 1 2 3; do sudo cpufreq-set -c $i -g powersave; done
+        echo "Changed to power saving mode"
+    ;;
+    esac
+
+exit 0
