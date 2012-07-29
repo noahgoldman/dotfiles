@@ -1,0 +1,36 @@
+#!/bin/zsh
+
+while getopts "m:r:" opt; do
+
+    case $opt in
+        m)
+            if [[ ! -d /tmp/ctmp ]] then
+                mkdir /tmp/ctmp
+            fi
+            if [[ -d $OPTARG ]] then
+                abspath=$(cd $OPTARG; pwd)
+                name=$(basename $abspath)
+
+                mkdir /tmp/ctmp/$name
+
+                cp -r $abspath /tmp/ctmp/
+                rm -rf $abspath
+                ln -s /tmp/ctmp/$name $abspath
+                echo "$abspath" > /tmp/ctmp/$name/.ctmp
+                cd $abspath
+                echo "Moved to tmp"
+            fi
+        ;;
+        r)
+            abspath=$(cd $OPTARG; pwd)
+            cdir=$(cat $abspath/.ctmp)
+            if [[ -h $cdir ]] then
+                rm $cdir
+            fi
+
+            mv $abspath $cdir
+            rm $cdir/.ctmp
+            echo "Resored to old directory"
+        ;;
+    esac
+done
