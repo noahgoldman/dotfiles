@@ -29,7 +29,7 @@ for i in $HOME/local/*; do
     [ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
 done
 
-PATH="$HOME/.bin:$HOME/.cabal/bin:${PATH}"
+PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:${PATH}"
 # ----------------------------------------------------------------------
 # Aliases
 # ----------------------------------------------------------------------
@@ -42,6 +42,8 @@ alias webserver='python -m SimpleHTTPServer 8080'
 alias _='sudo'
 alias __='sudo !!'
 alias xrec="xmonad --recompile"
+alias -g "backlight"="/bin/bash /usr/local/share/backlight"
+alias -g "kbd_backlight"="/bin/bash /usr/local/share/kbd_backlight"
 
 function pro {
 	cd ~/projects/$1
