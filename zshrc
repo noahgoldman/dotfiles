@@ -29,7 +29,7 @@ for i in $HOME/local/*; do
     [ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
 done
 
-PATH="$HOME/.bin:$HOME/.cabal/bin:${PATH}"
+PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:${PATH}"
 # ----------------------------------------------------------------------
 # Aliases
 # ----------------------------------------------------------------------
@@ -71,6 +71,7 @@ fi
 export GOROOT=$HOME/local/go
 
 export EDITOR='vim'
+export LIB_MAPLE_HOME=$HOME/local/libmaple
 # The following lines were added by compinstall
 
 unsetopt menu_complete
