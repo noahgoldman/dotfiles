@@ -42,6 +42,7 @@ alias webserver='python -m SimpleHTTPServer 8080'
 alias _='sudo'
 alias __='sudo !!'
 alias xrec="xmonad --recompile"
+alias dltorrent='scp -r "torrent@adam.phaaze.com:*" .'
 
 function pro {
 	cd ~/projects/$1

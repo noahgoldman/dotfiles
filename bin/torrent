@@ -1,0 +1,1 @@
+urxvt -T rtorrent -e ssh torrent@adam.phaaze.com -Xt screen -aAdr -RR rtorrent rtorrent
