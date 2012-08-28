@@ -40,5 +40,5 @@ autocmd Filetype python setlocal ts=4 sw=4 expandtab
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
 " Highlights lines that go over 80 characters
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/

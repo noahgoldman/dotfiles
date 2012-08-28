@@ -82,3 +82,5 @@ setopt complete_in_word
 setopt always_to_end
 compinit
 # End of lines added by compinstall
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
