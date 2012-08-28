@@ -43,6 +43,8 @@ alias _='sudo'
 alias __='sudo !!'
 alias xrec="xmonad --recompile"
 alias dltorrent='scp -r "torrent@adam.phaaze.com:*" .'
+alias -g "backlight"="/bin/bash /usr/local/share/backlight"
+alias -g "kbd_backlight"="/bin/bash /usr/local/share/kbd_backlight"
 
 function pro {
 	cd ~/projects/$1

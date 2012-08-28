@@ -15,6 +15,8 @@ myManageHook = composeAll
     [ isFullscreen --> doFullFloat
     , className =? "Skype" --> doShift "3:skype"
     , className =? "Chromium" --> doShift "2:web"
+    , className =? "Dwb" --> doShift "2:web"
+    , className =? "luakit" --> doShift "2:web"
     , className =? "hon-x86_64" --> doShift "5:games"
     , className =? "music" --> doShift "6:irc"
     , className =? "Wine" --> doShift "5:games"

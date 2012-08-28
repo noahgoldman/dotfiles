@@ -16,7 +16,7 @@ while getopts "m:r:" opt; do
                 cp -r $abspath /tmp/ctmp/
                 rm -rf $abspath
                 ln -s /tmp/ctmp/$name $abspath
-                echo "$abspath" > /tmp/ctmp/$name/.ctmp
+                echo "`cd $abspath; cd ../; pwd`" > /tmp/ctmp/$name/.ctmp
                 cd $abspath
                 echo "Moved to tmp"
             fi
