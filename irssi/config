@@ -132,6 +132,8 @@ chatnets = {
     "IRC",
     "type",
     "IRC",
+    "type",
+    "IRC",
     type = "IRC"
   );
 

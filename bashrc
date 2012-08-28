@@ -38,6 +38,7 @@ alias vibash='vim ~/.bashrc'
 alias json='python -mjson.tool'
 alias xrec='xmonad --recompile'
 alias fics='xboard -ics -icshost freechess.org'
+alias dltorrent='scp -r torrent@adam.phaaze.com:* .'
 
 function pro {
 	cd ~/projects/$1

@@ -42,6 +42,7 @@ alias webserver='python -m SimpleHTTPServer 8080'
 alias _='sudo'
 alias __='sudo !!'
 alias xrec="xmonad --recompile"
+alias dltorrent='scp -r "torrent@adam.phaaze.com:*" .'
 alias -g "backlight"="/bin/bash /usr/local/share/backlight"
 alias -g "kbd_backlight"="/bin/bash /usr/local/share/kbd_backlight"
 
@@ -73,6 +74,7 @@ fi
 export GOROOT=$HOME/local/go
 
 export EDITOR='vim'
+export LIB_MAPLE_HOME=$HOME/local/libmaple
 # The following lines were added by compinstall
 
 unsetopt menu_complete

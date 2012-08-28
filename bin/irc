@@ -1,1 +1,1 @@
-urxvt -T irssi -e ssh adam -Xt screen -aAdr
+urxvt -T irssi -e ssh adam.phaaze.com -Xt screen -aAdr -RR irssi irssi
