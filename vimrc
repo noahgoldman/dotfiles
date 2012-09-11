@@ -8,6 +8,10 @@ colorscheme solarized
 " Powerline settings
 let g:powerline_symbols='fancy'
 
+"Vim-latex settings
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+
 " Some nice filename tab completion
 set wildmode=longest,list,full
 set wildmenu

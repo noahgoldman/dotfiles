@@ -62,7 +62,10 @@ alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias gd='git diff'
 alias gp='git push'
 
-# Virtualenvwrapper settings
+# Todo.txt config
+alias t='TODOTXT_DEFAULT_ACTION=ls TODO_ACTIONS_DIR=~/.todo/todo.actions.d ~/.todo/todo.sh -d /.todo/todo.cfg'
+
+ #Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
 
 if [ -f /usr/local/bin/virtualenvwrapper.sh ] 
@@ -75,6 +78,7 @@ export GOROOT=$HOME/local/go
 
 export EDITOR='vim'
 export LIB_MAPLE_HOME=$HOME/local/libmaple
+export BROWSER='chromium'
 # The following lines were added by compinstall
 
 unsetopt menu_complete
