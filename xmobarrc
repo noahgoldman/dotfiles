@@ -10,7 +10,7 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                     , Run StdinReader
                     , Run CoreTemp ["-t", "Temp:<core0>|<core1>C", "-L", "40", "-H", "60", "-l", "lightblue", "-n", "gray90", "-h", "red"] 50
                     , Run Uptime [] 10
-                    , Run BatteryP ["BAT0"] ["-t", "Battery: <left>, AC: <acstatus>", "-f", "AC0/online"] 10
+                    , Run BatteryP ["BAT0"] ["-t", "Battery: <left>", "-f", "AC0/online"] 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"

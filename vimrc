@@ -29,6 +29,7 @@ set number
 set nowrap
 set pastetoggle=<F2>
 set visualbell
+set title
 
 " Search settings
 set ignorecase
