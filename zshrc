@@ -29,7 +29,7 @@ for i in $HOME/local/*; do
     [ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
 done
 
-PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:${PATH}"
+PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:$HOME/local/android/platform-tools:${PATH}"
 # ----------------------------------------------------------------------
 # Aliases
 # ----------------------------------------------------------------------
@@ -43,8 +43,10 @@ alias _='sudo'
 alias __='sudo !!'
 alias xrec="xmonad --recompile"
 alias dltorrent='scp -r "torrent@adam.phaaze.com:*" .'
+alias killspace="for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done"
 alias -g "backlight"="/bin/bash /usr/local/share/backlight"
 alias -g "kbd_backlight"="/bin/bash /usr/local/share/kbd_backlight"
+alias -g "lessout"="2>&1 | less"
 
 function pro {
 	cd ~/projects/$1
@@ -61,9 +63,6 @@ alias gc='git commit -a'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias gd='git diff'
 alias gp='git push'
-
-# Todo.txt config
-alias t='TODOTXT_DEFAULT_ACTION=ls TODO_ACTIONS_DIR=~/.todo/todo.actions.d ~/.todo/todo.sh -d /.todo/todo.cfg'
 
  #Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
@@ -90,3 +89,5 @@ compinit
 # End of lines added by compinstall
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+VBOX_USB=usbfs
