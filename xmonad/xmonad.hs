@@ -12,14 +12,15 @@ import qualified XMonad.StackSet as W
 myWorkspaces = ["1:term", "2:web", "3:skype", "4:music", "5:games", "6:irc", "7", "8", "9"]
 
 myManageHook = composeAll
-    [ isFullscreen --> doFullFloat
-    , className =? "Skype" --> doShift "3:skype"
+    [ className =? "Skype" --> doShift "3:skype"
     , className =? "Chromium" --> doShift "2:web"
     , className =? "Dwb" --> doShift "2:web"
     , className =? "luakit" --> doShift "2:web"
     , className =? "hon-x86_64" --> doShift "5:games"
     , className =? "music" --> doShift "6:irc"
     , className =? "Wine" --> doShift "5:games"
+    , className =? "dota_linux" --> doFullFloat
+    , className =? "dota_linux" --> doShift "5:games"
     , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
     , manageDocks
     ]

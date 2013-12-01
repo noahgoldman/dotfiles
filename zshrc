@@ -44,6 +44,7 @@ alias __='sudo !!'
 alias xrec="xmonad --recompile"
 alias dltorrent='scp -r "torrent@adam.phaaze.com:*" .'
 alias killspace="for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done"
+alias du-sort="du -h . --human-readable | sort -h"
 alias -g "backlight"="/bin/bash /usr/local/share/backlight"
 alias -g "kbd_backlight"="/bin/bash /usr/local/share/kbd_backlight"
 alias -g "lessout"="2>&1 | less"
@@ -73,13 +74,16 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]
         source /usr/local/bin/virtualenvwrapper.sh 
 fi
 
-# Go settings
-export GOROOT=$HOME/local/go
-
 export EDITOR='vim'
 export LIB_MAPLE_HOME=$HOME/local/libmaple
 export BROWSER='chromium'
-# The following lines were added by compinstall
+
+# History file setup
+export HISTFILE=$HOME/.zsh_history
+export HISTSIZE=5000
+export SAVEHIST=$HISTSIZE
+setopt incappendhistory
+setopt hist_ignore_all_dups
 
 unsetopt menu_complete
 unsetopt flowcontrol
