@@ -9,10 +9,11 @@ import XMonad.Layout.NoBorders
 import XMonad.Hooks.EwmhDesktops
 import qualified XMonad.StackSet as W
 
-myWorkspaces = ["1:term", "2:web", "3:skype", "4:music", "5:games", "6:irc", "7", "8", "9"]
+myWorkspaces = ["1:term", "2:web", "3:term1", "4:term2", "5:music", "6:irc", "7", "8", "9"]
 
 myManageHook = composeAll
-    [ className =? "Skype" --> doShift "3:skype"
+    [ isFullscreen --> doFullFloat
+    , className =? "Skype" --> doShift "3:skype"
     , className =? "Chromium" --> doShift "2:web"
     , className =? "Dwb" --> doShift "2:web"
     , className =? "luakit" --> doShift "2:web"

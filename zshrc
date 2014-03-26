@@ -49,6 +49,7 @@ alias -g "backlight"="/bin/bash /usr/local/share/backlight"
 alias -g "kbd_backlight"="/bin/bash /usr/local/share/kbd_backlight"
 alias -g "lessout"="2>&1 | less"
 alias -g "json"="python -mjson.tool"
+alias -g "sync-music"="rsync -rvhL ~/music"
 
 function pro {
 	cd ~/projects/$1
