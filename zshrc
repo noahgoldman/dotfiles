@@ -97,3 +97,6 @@ compinit
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 VBOX_USB=usbfs
+
+# Go settings
+export GOPATH=$HOME/projects/golang

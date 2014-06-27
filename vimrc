@@ -1,5 +1,22 @@
-call pathogen#infect()
+set nocompatible
+
+"*******************
+" Vundle Section
+"*******************
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-surround'
+
+call vundle#end()
 filetype plugin indent on
+"*******************
+" End Vundle Section
+"*******************
 
 syntax enable
 set background=dark
