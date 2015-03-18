@@ -7,6 +7,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 import XMonad.Layout.NoBorders
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.SetWMName
 import qualified XMonad.StackSet as W
 
 myWorkspaces = ["1:term", "2:web", "3:term1", "4:term2", "5:music", "6:irc", "7", "8", "9"]
@@ -28,6 +29,7 @@ myManageHook = composeAll
     where role = stringProperty "WM_WINDOW_RULE"
 
 myStartupHook = do
+    setWMName "LG3D"
     spawn "urxvt"
     spawn "chromium"
 

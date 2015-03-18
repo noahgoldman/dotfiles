@@ -12,6 +12,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'wting/rust.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -63,11 +64,12 @@ autocmd Filetype cpp setlocal ts=4 sw=4 expandtab
 autocmd Filetype stylus setlocal ts=2 sw=2 expandtab
 autocmd Filetype arduino setlocal ts=2 sw=2 expandtab
 autocmd Filetype python setlocal ts=4 sw=4 expandtab
-autocmd Filetype modula2 setlocal ts=4 sw=4 expandtab wrap
+autocmd Filetype tex setlocal ts=4 sw=4 expandtab wrap
 
 " Arduino detection
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 autocmd! BufNewFile,BufRead *.oz setlocal ft=oz
+autocmd! BufNewFile,BufRead *.salsa setlocal ft=java
 
 " Highlights lines that go over 80 characters
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929

@@ -11,8 +11,9 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                     , Run CoreTemp ["-t", "Temp:<core0>|<core1>C", "-L", "40", "-H", "60", "-l", "lightblue", "-n", "gray90", "-h", "red"] 50
                     , Run Uptime [] 10
                     , Run BatteryP ["BAT0"] ["-t", "Battery: <left>", "-f", "AC0/online"] 10
+                    , Run Com "nvidia-settings" ["-q", "gpucoretemp", "-t"] "gputemp" 0
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %coretemp% | %cpu% | %memory% * %swap% - %uptime%  |  %battery%   <fc=#ee9a00>%date%</fc> | %KHFD%"
+       , template = "%StdinReader% }{ %coretemp% - GPU: %gputemp%C | %cpu% | %memory% * %swap% - %uptime%  |  %battery%   <fc=#ee9a00>%date%</fc> | %KHFD%"
        }

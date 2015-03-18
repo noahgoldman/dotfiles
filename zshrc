@@ -16,7 +16,7 @@ setopt correct_all
 bindkey -v
 
 # ----------------------------------------------------------------------
-# Script to add everythin in ~/local to PATH
+# Script to add everything in ~/local to PATH
 # ----------------------------------------------------------------------
 LOCAL_PATH=$HOME/local
 LD_LIBRARY_PATH="/opt/local/lib:/usr/local/lib:/usr/lib"
@@ -42,7 +42,6 @@ alias webserver='python -m SimpleHTTPServer 8080'
 alias _='sudo'
 alias __='sudo !!'
 alias xrec="xmonad --recompile"
-alias dltorrent='scp -r "torrent@adam.phaaze.com:*" .'
 alias killspace="for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done"
 alias du-sort="du -h . --human-readable | sort -h"
 alias -g "backlight"="/bin/bash /usr/local/share/backlight"
@@ -50,6 +49,7 @@ alias -g "kbd_backlight"="/bin/bash /usr/local/share/kbd_backlight"
 alias -g "lessout"="2>&1 | less"
 alias -g "json"="python -mjson.tool"
 alias -g "sync-music"="rsync -rvhL ~/music"
+alias gsync='grive -p ~/gdrive'
 
 function pro {
 	cd ~/projects/$1
