@@ -185,9 +185,11 @@ function! fugitive#detect(path) abort
     if expand('%:p') =~# '//'
       call buffer.setvar('&path', s:sub(buffer.getvar('&path'), '^\.%(,|$)', ''))
     endif
-    if stridx(buffer.getvar('&tags'), escape(b:git_dir.'/tags', ', ')) == -1
-      call buffer.setvar('&tags', escape(b:git_dir.'/tags', ', ').','.buffer.getvar('&tags'))
-      if &filetype !=# ''
+    if stridx(buffer.getvar('&tags'), escape(b:git_dir, ', ')) == -1
+      if filereadable(b:git_dir.'/tags')
+        call buffer.setvar('&tags', escape(b:git_dir.'/tags', ', ').','.buffer.getvar('&tags'))
+      endif
+      if &filetype !=# '' && filereadable(b:git_dir.'/'.&filetype.'.tags')
         call buffer.setvar('&tags', escape(b:git_dir.'/'.&filetype.'.tags', ', ').','.buffer.getvar('&tags'))
       endif
     endif
@@ -648,15 +650,19 @@ function! s:Git(bang, args) abort
   return matchstr(a:args, '\v\C\\@<!%(\\\\)*\|\zs.*')
 endfunction
 
-function! s:GitComplete(A,L,P) abort
+function! fugitive#git_commands() abort
   if !exists('s:exec_path')
     let s:exec_path = s:sub(system(g:fugitive_git_executable.' --exec-path'),'\n$','')
   endif
-  let cmds = map(split(glob(s:exec_path.'/git-*'),"\n"),'s:sub(v:val[strlen(s:exec_path)+5 : -1],"\\.exe$","")')
-  if a:L =~ ' [[:alnum:]-]\+ '
-    return s:repo().superglob(a:A)
-  else
+  return map(split(glob(s:exec_path.'/git-*'),"\n"),'s:sub(v:val[strlen(s:exec_path)+5 : -1],"\\.exe$","")')
+endfunction
+
+function! s:GitComplete(A, L, P) abort
+  if strpart(a:L, 0, a:P) !~# ' [[:alnum:]-]\+ '
+    let cmds = fugitive#git_commands()
     return filter(sort(cmds+keys(s:repo().aliases())), 'strpart(v:val, 0, strlen(a:A)) ==# a:A')
+  else
+    return s:repo().superglob(a:A)
   endif
 endfunction
 
@@ -960,15 +966,16 @@ endfunction
 
 call s:command("-nargs=? -complete=customlist,s:CommitComplete Gcommit :execute s:Commit(<q-args>)")
 
-function! s:Commit(args) abort
+function! s:Commit(args, ...) abort
+  let repo = a:0 ? a:1 : s:repo()
   let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
   let dir = getcwd()
-  let msgfile = s:repo().dir('COMMIT_EDITMSG')
+  let msgfile = repo.dir('COMMIT_EDITMSG')
   let outfile = tempname()
   let errorfile = tempname()
   try
     try
-      execute cd.s:fnameescape(s:repo().tree())
+      execute cd.s:fnameescape(repo.tree())
       if s:winshell()
         let command = ''
         let old_editor = $GIT_EDITOR
@@ -976,7 +983,7 @@ function! s:Commit(args) abort
       else
         let command = 'env GIT_EDITOR=false '
       endif
-      let command .= s:repo().git_command('commit').' '.a:args
+      let command .= repo.git_command('commit').' '.a:args
       if &shell =~# 'csh'
         noautocmd silent execute '!('.command.' > '.outfile.') >& '.errorfile
       elseif a:args =~# '\%(^\| \)-\%(-interactive\|p\|-patch\)\>'
@@ -1002,15 +1009,18 @@ function! s:Commit(args) abort
       let error = get(errors,-2,get(errors,-1,'!'))
       if error =~# 'false''\=\.$'
         let args = a:args
-        let args = s:gsub(args,'%(%(^| )-- )@<!%(^| )@<=%(-[esp]|--edit|--interactive|patch|--signoff)%($| )','')
+        let args = s:gsub(args,'%(%(^| )-- )@<!%(^| )@<=%(-[esp]|--edit|--interactive|--patch|--signoff)%($| )','')
         let args = s:gsub(args,'%(%(^| )-- )@<!%(^| )@<=%(-c|--reedit-message|--reuse-message|-F|--file|-m|--message)%(\s+|\=)%(''[^'']*''|"%(\\.|[^"])*"|\\.|\S)*','')
         let args = s:gsub(args,'%(^| )@<=[%#]%(:\w)*','\=expand(submatch(0))')
+        let args = s:sub(args, '\ze -- |$', ' --no-edit --no-interactive --no-signoff')
         let args = '-F '.s:shellesc(msgfile).' '.args
         if args !~# '\%(^\| \)--cleanup\>'
           let args = '--cleanup=strip '.args
         endif
         if bufname('%') == '' && line('$') == 1 && getline(1) == '' && !&mod
           execute 'keepalt edit '.s:fnameescape(msgfile)
+        elseif a:args =~# '\%(^\| \)-\%(-verbose\|\w*v\)\>'
+          execute 'keepalt tabedit '.s:fnameescape(msgfile)
         elseif s:buffer().type() ==# 'index'
           execute 'keepalt edit '.s:fnameescape(msgfile)
           execute (search('^#','n')+1).'wincmd+'
@@ -1052,7 +1062,7 @@ function! s:FinishCommit() abort
   let args = getbufvar(+expand('<abuf>'),'fugitive_commit_arguments')
   if !empty(args)
     call setbufvar(+expand('<abuf>'),'fugitive_commit_arguments','')
-    return s:Commit(args)
+    return s:Commit(args, s:repo(getbufvar(+expand('<abuf>'),'git_dir')))
   endif
   return ''
 endfunction
@@ -1097,6 +1107,7 @@ let s:common_efm = ''
       \ . '%+Eusage:%.%#,'
       \ . '%+Eerror:%.%#,'
       \ . '%+Efatal:%.%#,'
+      \ . '%-G%.%#%\e[K%.%#,'
       \ . '%-G%.%#%\r%.%\+'
 
 function! s:Merge(cmd, bang, args) abort
@@ -1154,7 +1165,7 @@ function! s:Merge(cmd, bang, args) abort
   if empty(filter(getqflist(),'v:val.valid'))
     if !had_merge_msg && filereadable(s:repo().dir('MERGE_MSG'))
       cclose
-      return 'Gcommit --no-status -t '.s:shellesc(s:repo().dir('MERGE_MSG'))
+      return 'Gcommit --no-status -n -t '.s:shellesc(s:repo().dir('MERGE_MSG'))
     endif
   endif
   let qflist = getqflist()
@@ -1184,7 +1195,7 @@ endif
 call s:command("-bang -nargs=? -complete=customlist,s:EditComplete Ggrep :execute s:Grep('grep',<bang>0,<q-args>)")
 call s:command("-bang -nargs=? -complete=customlist,s:EditComplete Glgrep :execute s:Grep('lgrep',<bang>0,<q-args>)")
 call s:command("-bar -bang -nargs=* -range=0 -complete=customlist,s:EditComplete Glog :call s:Log('grep<bang>',<line1>,<count>,<f-args>)")
-call s:command("-bar -bang -nargs=* -complete=customlist,s:EditComplete Gllog :call s:Log('lgrep<bang>',<line1>,<count>,<f-args>)")
+call s:command("-bar -bang -nargs=* -range=0 -complete=customlist,s:EditComplete Gllog :call s:Log('lgrep<bang>',<line1>,<count>,<f-args>)")
 
 function! s:Grep(cmd,bang,arg) abort
   let grepprg = &grepprg
@@ -1522,6 +1533,35 @@ augroup fugitive_commit
   autocmd!
   autocmd VimLeavePre,BufDelete COMMIT_EDITMSG execute s:sub(s:FinishCommit(), '^echoerr (.*)', 'echohl ErrorMsg|echo \1|echohl NONE')
 augroup END
+
+" Section: Gpush, Gfetch
+
+call s:command("-nargs=? -bang -complete=custom,s:RemoteComplete Gpush  execute s:Dispatch('<bang>', 'push '.<q-args>)")
+call s:command("-nargs=? -bang -complete=custom,s:RemoteComplete Gfetch execute s:Dispatch('<bang>', 'fetch '.<q-args>)")
+
+function! s:Dispatch(bang, args)
+  let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd' : 'cd'
+  let cwd = getcwd()
+  let [mp, efm, cc] = [&l:mp, &l:efm, get(b:, 'current_compiler', '')]
+  try
+    let b:current_compiler = 'git'
+    let &l:errorformat = s:common_efm
+    let &l:makeprg = g:fugitive_git_executable . ' ' . a:args
+    execute cd fnameescape(s:repo().tree())
+    if exists(':Make') == 2
+      noautocmd Make
+    else
+      silent noautocmd make!
+      redraw!
+      return 'call fugitive#cwindow()'
+    endif
+    return ''
+  finally
+    let [&l:mp, &l:efm, b:current_compiler] = [mp, efm, cc]
+    if empty(cc) | unlet! b:current_compiler | endif
+    execute cd fnameescape(cwd)
+  endtry
+endfunction
 
 " Section: Gdiff
 
@@ -2135,17 +2175,29 @@ function! s:Browse(bang,line1,count,...) abort
       let raw = remote
     endif
 
-    let url = s:github_url(s:repo(),raw,rev,commit,path,type,a:line1,a:count)
-    if url == ''
-      let url = s:instaweb_url(s:repo(),rev,commit,path,type,a:count > 0 ? a:line1 : 0)
-    endif
+    for Handler in g:fugitive_browse_handlers
+      let url = call(Handler, [{
+            \ 'repo': s:repo(),
+            \ 'remote': raw,
+            \ 'revision': rev,
+            \ 'commit': commit,
+            \ 'path': path,
+            \ 'type': type,
+            \ 'line1': a:count > 0 ? a:line1 : 0,
+            \ 'line2': a:count > 0 ? a:count : 0}])
+      if !empty(url)
+        break
+      endif
+    endfor
 
-    if url == ''
-      call s:throw("Instaweb failed to start and '".remote."' is not a GitHub remote")
+    if empty(url)
+      call s:throw("Instaweb failed to start and '".remote."' is not a supported remote")
     endif
 
     if a:bang
-      let @* = url
+      if has('clipboard')
+        let @* = url
+      endif
       return 'echomsg '.string(url)
     elseif exists(':Browse') == 2
       return 'echomsg '.string(url).'|Browse '.url
@@ -2157,24 +2209,27 @@ function! s:Browse(bang,line1,count,...) abort
   endtry
 endfunction
 
-function! s:github_url(repo,url,rev,commit,path,type,line1,line2) abort
-  let path = a:path
+function! s:github_url(opts, ...) abort
+  if a:0 || type(a:opts) != type({})
+    return ''
+  endif
   let domain_pattern = 'github\.com'
   let domains = exists('g:fugitive_github_domains') ? g:fugitive_github_domains : []
   for domain in domains
     let domain_pattern .= '\|' . escape(split(domain, '://')[-1], '.')
   endfor
-  let repo = matchstr(a:url,'^\%(https\=://\|git://\|git@\)\=\zs\('.domain_pattern.'\)[/:].\{-\}\ze\%(\.git\)\=$')
+  let repo = matchstr(get(a:opts, 'remote'), '^\%(https\=://\|git://\|git@\)\=\zs\('.domain_pattern.'\)[/:].\{-\}\ze\%(\.git\)\=$')
   if repo ==# ''
     return ''
   endif
+  let path = a:opts.path
   if index(domains, 'http://' . matchstr(repo, '^[^:/]*')) >= 0
     let root = 'http://' . s:sub(repo,':','/')
   else
     let root = 'https://' . s:sub(repo,':','/')
   endif
   if path =~# '^\.git/refs/heads/'
-    let branch = a:repo.git_chomp('config','branch.'.path[16:-1].'.merge')[11:-1]
+    let branch = a:opts.repo.git_chomp('config','branch.'.path[16:-1].'.merge')[11:-1]
     if branch ==# ''
       return root . '/commits/' . path[16:-1]
     else
@@ -2187,27 +2242,27 @@ function! s:github_url(repo,url,rev,commit,path,type,line1,line2) abort
   elseif path =~# '^\.git\>'
     return root
   endif
-  if a:rev =~# '^[[:alnum:]._-]\+:'
-    let commit = matchstr(a:rev,'^[^:]*')
-  elseif a:commit =~# '^\d\=$'
-    let local = matchstr(a:repo.head_ref(),'\<refs/heads/\zs.*')
-    let commit = a:repo.git_chomp('config','branch.'.local.'.merge')[11:-1]
+  if a:opts.revision =~# '^[[:alnum:]._-]\+:'
+    let commit = matchstr(a:opts.revision,'^[^:]*')
+  elseif a:opts.commit =~# '^\d\=$'
+    let local = matchstr(a:opts.repo.head_ref(),'\<refs/heads/\zs.*')
+    let commit = a:opts.repo.git_chomp('config','branch.'.local.'.merge')[11:-1]
     if commit ==# ''
       let commit = local
     endif
   else
-    let commit = a:commit
+    let commit = a:opts.commit
   endif
-  if a:type == 'tree'
+  if a:opts.type == 'tree'
     let url = s:sub(root . '/tree/' . commit . '/' . path,'/$','')
-  elseif a:type == 'blob'
+  elseif a:opts.type == 'blob'
     let url = root . '/blob/' . commit . '/' . path
-    if a:line2 > 0 && a:line1 == a:line2
-      let url .= '#L' . a:line1
-    elseif a:line2 > 0
-      let url .= '#L' . a:line1 . '-' . a:line2
+    if get(a:opts, 'line2') && a:opts.line1 == a:opts.line2
+      let url .= '#L' . a:opts.line1
+    elseif get(a:opts, 'line2')
+      let url .= '#L' . a:opts.line1 . '-' . a:opts.line2
     endif
-  elseif a:type == 'tag'
+  elseif a:opts.type == 'tag'
     let commit = matchstr(getline(3),'^tag \zs.*')
     let url = root . '/tree/' . commit
   else
@@ -2216,46 +2271,53 @@ function! s:github_url(repo,url,rev,commit,path,type,line1,line2) abort
   return url
 endfunction
 
-function! s:instaweb_url(repo,rev,commit,path,type,...) abort
-  let output = a:repo.git_chomp('instaweb','-b','unknown')
+function! s:instaweb_url(opts) abort
+  let output = a:opts.repo.git_chomp('instaweb','-b','unknown')
   if output =~# 'http://'
-    let root = matchstr(output,'http://.*').'/?p='.fnamemodify(a:repo.dir(),':t')
+    let root = matchstr(output,'http://.*').'/?p='.fnamemodify(a:opts.repo.opts.dir(),':t')
   else
     return ''
   endif
-  if a:path =~# '^\.git/refs/.'
-    return root . ';a=shortlog;h=' . matchstr(a:path,'^\.git/\zs.*')
-  elseif a:path =~# '^\.git\>'
+  if a:opts.path =~# '^\.git/refs/.'
+    return root . ';a=shortlog;h=' . matchstr(a:opts.path,'^\.git/\zs.*')
+  elseif a:opts.path =~# '^\.git\>'
     return root
   endif
   let url = root
-  if a:commit =~# '^\x\{40\}$'
-    if a:type ==# 'commit'
+  if a:opts.commit =~# '^\x\{40\}$'
+    if a:opts.type ==# 'commit'
       let url .= ';a=commit'
     endif
-    let url .= ';h=' . a:repo.rev_parse(a:commit . (a:path == '' ? '' : ':' . a:path))
+    let url .= ';h=' . a:opts.repo.rev_parse(a:opts.commit . (a:opts.path == '' ? '' : ':' . a:opts.path))
   else
-    if a:type ==# 'blob'
+    if a:opts.type ==# 'blob'
       let tmp = tempname()
-      silent execute 'write !'.a:repo.git_command('hash-object','-w','--stdin').' > '.tmp
+      silent execute 'write !'.a:opts.repo.git_command('hash-object','-w','--stdin').' > '.tmp
       let url .= ';h=' . readfile(tmp)[0]
     else
       try
-        let url .= ';h=' . a:repo.rev_parse((a:commit == '' ? 'HEAD' : ':' . a:commit) . ':' . a:path)
+        let url .= ';h=' . a:opts.repo.rev_parse((a:opts.commit == '' ? 'HEAD' : ':' . a:opts.commit) . ':' . a:opts.path)
       catch /^fugitive:/
         call s:throw('fugitive: cannot browse uncommitted file')
       endtry
     endif
-    let root .= ';hb=' . matchstr(a:repo.head_ref(),'[^ ]\+$')
+    let root .= ';hb=' . matchstr(a:opts.repo.head_ref(),'[^ ]\+$')
   endif
-  if a:path !=# ''
-    let url .= ';f=' . a:path
+  if a:opts.path !=# ''
+    let url .= ';f=' . a:opts.path
   endif
-  if a:0 && a:1
-    let url .= '#l' . a:1
+  if get(a:opts, 'line1')
+    let url .= '#l' . a:opts.line1
   endif
   return url
 endfunction
+
+if !exists('g:fugitive_browse_handlers')
+  let g:fugitive_browse_handlers = []
+endif
+
+call extend(g:fugitive_browse_handlers,
+      \ [s:function('s:github_url'), s:function('s:instaweb_url')])
 
 " Section: File access
 
@@ -2560,7 +2622,7 @@ augroup fugitive_temp
         \   let b:git_type = 'temp' |
         \   let b:git_args = s:temp_files[tolower(expand('<afile>:p'))].args |
         \   call fugitive#detect(expand('<afile>:p')) |
-        \   setlocal bufhidden=delete |
+        \   setlocal bufhidden=delete nobuflisted |
         \   nnoremap <buffer> <silent> q    :<C-U>bdelete<CR>|
         \ endif
 augroup END
