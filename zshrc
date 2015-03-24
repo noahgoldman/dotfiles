@@ -20,14 +20,16 @@ bindkey -v
 # ----------------------------------------------------------------------
 LOCAL_PATH=$HOME/local
 LD_LIBRARY_PATH="/opt/local/lib:/usr/local/lib:/usr/lib"
-for i in $HOME/local/*; do
-    [ -d $i/bin ] && PATH="${i}/bin:${PATH}"
-    [ -d $i/sbin ] && PATH="${i}/sbin:${PATH}"
-    [ -d $i/include ] && CPATH="${i}/include:${CPATH}"
-    [ -d $i/lib ] && LD_LIBRARY_PATH="${i}/lib:${LD_LIBRARY_PATH}"
-    [ -d $i/lib/pkgconfig ] && PKG_CONFIG_PATH="${i}/lib/pkgconfig:${PKG_CONFIG_PATH}"
-    [ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
-done
+if [ -d $HOME/local ]; then
+    for i in $HOME/local/*; do
+        [ -d $i/bin ] && PATH="${i}/bin:${PATH}"
+        [ -d $i/sbin ] && PATH="${i}/sbin:${PATH}"
+        [ -d $i/include ] && CPATH="${i}/include:${CPATH}"
+        [ -d $i/lib ] && LD_LIBRARY_PATH="${i}/lib:${LD_LIBRARY_PATH}"
+        [ -d $i/lib/pkgconfig ] && PKG_CONFIG_PATH="${i}/lib/pkgconfig:${PKG_CONFIG_PATH}"
+        [ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
+    done
+fi
 
 PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:$HOME/local/android/platform-tools:${PATH}"
 # ----------------------------------------------------------------------
