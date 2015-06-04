@@ -5,7 +5,10 @@
 autoload -U compinit
 autoload colors; colors;
 
+source $HOME/.zsh/git_prompt.zsh
+
 PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[magenta]%}%m%{$reset_color%} %{$fg[blue]%}%~>%{$reset_color%} "
+RPS1='$(git_prompt_string)'
 
 setopt correct_all
 
@@ -36,7 +39,7 @@ PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:$HOME/local/andro
 # Aliases
 # ----------------------------------------------------------------------
 alias l='ls'
-alias ls='ls --color=auto'
+alias ls='ls -G' # OSX only
 alias ll='ls -A'
 alias de='deactivate'
 alias rezsh='source ~/.zshrc'

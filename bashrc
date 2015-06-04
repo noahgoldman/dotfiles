@@ -28,8 +28,8 @@ PATH="$HOME/.bin:${PATH}"
 # Aliases
 # ----------------------------------------------------------------------
 alias l='ls'
-alias ls='ls --color=auto'
-alias ll='ls -A'
+alias ls='ls'
+alias ll='ls'
 alias activate='source env/bin/activate'
 alias de='deactivate'
 alias webserver='python -m SimpleHTTPServer 8080'
