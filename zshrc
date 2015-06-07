@@ -2,7 +2,6 @@
 # ~/.zshrc
 #
 
-autoload -U compinit
 autoload colors; colors;
 
 source $HOME/.zsh/git_prompt.zsh
@@ -11,6 +10,9 @@ PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[magenta]%}%m%{$reset_color%} %{$fg[
 RPS1='$(git_prompt_string)'
 
 setopt correct_all
+
+# Load custom completions
+fpath=($HOME/.zsh/completion $fpath)
 
 #
 # Binds
@@ -96,6 +98,8 @@ unsetopt flowcontrol
 setopt auto_menu
 setopt complete_in_word
 setopt always_to_end
+
+autoload -U compinit
 compinit
 # End of lines added by compinstall
 
