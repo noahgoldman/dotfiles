@@ -4,7 +4,7 @@
 
 autoload colors; colors;
 
-source $HOME/.zsh/git_prompt.zsh
+source $HOME/.zsh/*.zsh
 
 PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[magenta]%}%m%{$reset_color%} %{$fg[blue]%}%~>%{$reset_color%} "
 RPS1='$(git_prompt_string)'

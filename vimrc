@@ -65,6 +65,7 @@ autocmd Filetype stylus setlocal ts=2 sw=2 expandtab
 autocmd Filetype arduino setlocal ts=2 sw=2 expandtab
 autocmd Filetype python setlocal ts=4 sw=4 expandtab
 autocmd Filetype tex setlocal ts=4 sw=4 expandtab wrap
+autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
 
 " Arduino detection
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
