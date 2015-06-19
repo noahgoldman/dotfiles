@@ -7,12 +7,12 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'Lokaltog/vim-powerline'
 Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'wting/rust.vim'
+Plugin 'bling/vim-airline'
+Plugin 'kien/ctrlp.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -21,11 +21,10 @@ filetype plugin indent on
 "*******************
 
 syntax enable
-set background=dark
+let &t_Co=256
+let g:solarized_term = 1
 colorscheme solarized
-
-" Powerline settings
-let g:powerline_symbols='fancy'
+set background=dark
 
 "Vim-latex settings
 set grepprg=grep\ -nH\ $*
@@ -66,12 +65,16 @@ autocmd Filetype arduino setlocal ts=2 sw=2 expandtab
 autocmd Filetype python setlocal ts=4 sw=4 expandtab
 autocmd Filetype tex setlocal ts=4 sw=4 expandtab wrap
 autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
+autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 
 " Arduino detection
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 autocmd! BufNewFile,BufRead *.oz setlocal ft=oz
 autocmd! BufNewFile,BufRead *.salsa setlocal ft=java
 
-" Highlights lines that go over 80 characters
-"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"match OverLength /\%81v.\+/
+highlight Bad ctermbg=red ctermfg=white guibg=#592929
+match Bad /\%81v.\+/ " Highlight lines over 80 characters
+match Bad /\s\+$/ " Highlight trailing whitespace
+
+" Airline
+let g:airline#extensions#tabline#enabled = 1
