@@ -2,13 +2,17 @@
 # ~/.zshrc
 #
 
+include () {
+    [[ -f "$1" ]] && source "$1"
+}
+
 autoload colors; colors;
 
 source $HOME/.zsh/*.zsh
-source ~/.profile
+include $HOME/.profile
 
 PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[magenta]%}%m%{$reset_color%} %{$fg[blue]%}%~>%{$reset_color%} "
-RPS1='$(git_prompt_string)'
+RPS1='%(?..[%?] )$(git_prompt_string)'
 
 setopt correct_all
 
@@ -78,10 +82,7 @@ alias gp='git push'
  #Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
 
-if [ -f /usr/local/bin/virtualenvwrapper.sh ] 
-    then 
-        source /usr/local/bin/virtualenvwrapper.sh 
-fi
+include /usr/local/bin/virtualenvwrapper.sh
 
 export EDITOR='vim'
 export LIB_MAPLE_HOME=$HOME/local/libmaple
@@ -104,9 +105,9 @@ autoload -U compinit
 compinit
 # End of lines added by compinstall
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
 VBOX_USB=usbfs
 
 # Go settings
 export GOPATH=$HOME/projects/golang
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
