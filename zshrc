@@ -8,8 +8,10 @@ include () {
 
 autoload colors;
 
-source $HOME/.zsh/*.zsh
 include $HOME/.profile
+for f in ~/.zsh/*.zsh; do
+    include "$f"
+done
 
 PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[magenta]%}%m%{$reset_color%} %{$fg[blue]%}%~>%{$reset_color%} "
 RPS1='%(?..[%?] )$(git_prompt_string)'
