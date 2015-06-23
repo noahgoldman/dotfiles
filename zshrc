@@ -6,7 +6,7 @@ include () {
     [[ -f "$1" ]] && source "$1"
 }
 
-autoload colors; colors;
+autoload colors;
 
 source $HOME/.zsh/*.zsh
 include $HOME/.profile
@@ -81,10 +81,10 @@ alias gp='git push'
 
  #Virtualenvwrapper settings
 export WORKON_HOME=~/.envs
-
 include /usr/local/bin/virtualenvwrapper.sh
 
 export EDITOR='vim'
+export VISUAL='vim'
 export LIB_MAPLE_HOME=$HOME/local/libmaple
 export BROWSER='chromium'
 
@@ -100,6 +100,7 @@ unsetopt flowcontrol
 setopt auto_menu
 setopt complete_in_word
 setopt always_to_end
+setopt nohashdirs
 
 autoload -U compinit
 compinit
