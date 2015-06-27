@@ -18,7 +18,7 @@ function link {
 
 for file in $PWD/*
 do
-    if [ ! "${file##/*/}" == "Makefile" -a ! "${file##/*/}" == "install.sh" ]; then
+    if [ ! "${file##/*/}" == "install.sh" ]; then
         link ${file##/*/}
     fi
 done
