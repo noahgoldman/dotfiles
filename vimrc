@@ -13,6 +13,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'wting/rust.vim'
 Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
+Plugin 'puppetlabs/puppet-syntax-vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -66,6 +67,8 @@ autocmd Filetype python setlocal ts=4 sw=4 expandtab
 autocmd Filetype tex setlocal ts=4 sw=4 expandtab wrap
 autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
+autocmd Filetype jade setlocal ts=2 sw=2 expandtab
+autocmd Filetype css setlocal ts=2 sw=2 expandtab
 
 " Arduino detection
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino

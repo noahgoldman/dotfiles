@@ -64,6 +64,7 @@ alias -g "lessout"="2>&1 | less"
 alias -g "json"="python -mjson.tool"
 alias -g "sync-music"="rsync -rvhL ~/music"
 alias gsync='grive -p ~/gdrive'
+alias -g "less"="less -R"
 
 function pro {
 	cd ~/projects/$1
