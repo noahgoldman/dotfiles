@@ -76,10 +76,17 @@ autocmd! BufNewFile,BufRead *.oz setlocal ft=oz
 autocmd! BufNewFile,BufRead *.salsa setlocal ft=java
 
 highlight Bad ctermbg=red ctermfg=white guibg=#592929
-match Bad /\%81v.\+/ " Highlight lines over 80 characters
-match Bad /\s\+$/ " Highlight trailing whitespace
+au BufWinEnter * let w:m2=matchadd('Bad', '\%>80v.\+', -1)" Highlight lines over 80 characters
+
+" Highlight trailing whitespace
+au InsertEnter * match Bad /\s\+\%#\@<!$/
+au InsertLeave * match Bad /\s\+$/
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='solarized'
 let g:airline_powerline_fonts = 1
+
+" ctrlp
+" Ignore files in gitignore
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']

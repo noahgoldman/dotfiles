@@ -8,7 +8,6 @@ include () {
 
 autoload colors;
 
-include $HOME/.profile
 for f in ~/.zsh/*.zsh; do
     include "$f"
 done
