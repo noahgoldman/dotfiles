@@ -8,9 +8,7 @@ include () {
 
 autoload colors;
 
-for f in ~/.zsh/*.zsh; do
-    include "$f"
-done
+for f in ~/.zsh/*.zsh(N); do include "$f"; done
 
 PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[magenta]%}%m%{$reset_color%} %{$fg[blue]%}%~>%{$reset_color%} "
 RPS1='%(?..[%?] )$(git_prompt_string)'
@@ -57,6 +55,7 @@ alias __='sudo !!'
 alias xrec="xmonad --recompile"
 alias killspace="for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done"
 alias du-sort="du -h . --human-readable | sort -h"
+alias fdupes='find -not -empty -type f -printf "%s\n" | sort -rn | uniq -d | xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate'
 alias -g "backlight"="/bin/bash /usr/local/share/backlight"
 alias -g "kbd_backlight"="/bin/bash /usr/local/share/kbd_backlight"
 alias -g "lessout"="2>&1 | less"
