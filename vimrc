@@ -15,6 +15,7 @@ Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
 Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'fatih/vim-go'
+Plugin 'lervag/vimtex'
 
 call vundle#end()
 filetype plugin indent on
@@ -65,7 +66,7 @@ autocmd Filetype cpp setlocal ts=4 sw=4 expandtab
 autocmd Filetype stylus setlocal ts=2 sw=2 expandtab
 autocmd Filetype arduino setlocal ts=2 sw=2 expandtab
 autocmd Filetype python setlocal ts=4 sw=4 expandtab
-autocmd Filetype tex setlocal ts=4 sw=4 expandtab wrap
+autocmd Filetype tex setlocal ts=2 sw=2 expandtab wrap
 autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype jade setlocal ts=2 sw=2 expandtab
@@ -78,7 +79,13 @@ autocmd! BufNewFile,BufRead *.oz setlocal ft=oz
 autocmd! BufNewFile,BufRead *.salsa setlocal ft=java
 
 highlight Bad ctermbg=red ctermfg=white guibg=#592929
-au BufWinEnter * let w:m2=matchadd('Bad', '\%>80v.\+', -1)" Highlight lines over 80 characters
+
+" Highlight lines over 80 characters
+if exists('+colorcolumn')
+    set colorcolumn=80
+else
+    au BufWinEnter * let w:m2=matchadd('Bad', '\%>80v.\+', -1)" Highlight lines over 80 characters
+endif
 
 " Highlight trailing whitespace
 au InsertEnter * match Bad /\s\+\%#\@<!$/
