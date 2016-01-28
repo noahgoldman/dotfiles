@@ -16,6 +16,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'fatih/vim-go'
 Plugin 'lervag/vimtex'
+Plugin 'ledger/vim-ledger'
+Plugin 'jamessan/vim-gnupg'
 
 call vundle#end()
 filetype plugin indent on
@@ -146,3 +148,6 @@ function ToggleHex()
   let &readonly=l:oldreadonly
   let &modifiable=l:oldmodifiable
 endfunction
+
+" Ledger functionality
+au BufNewFile,BufRead *.ldg,*.ledger setf ledger | comp ledger

@@ -9,6 +9,7 @@ include () {
 autoload colors;
 
 for f in ~/.zsh/*.zsh(N); do include "$f"; done
+include $HOME/.profile
 
 PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[magenta]%}%m%{$reset_color%} %{$fg[blue]%}%~>%{$reset_color%} "
 RPS1='%(?..[%?] )$(git_prompt_string)'
@@ -63,6 +64,7 @@ alias -g "json"="python -mjson.tool"
 alias -g "sync-music"="rsync -rvhL ~/music"
 alias gsync='grive -p ~/gdrive'
 alias -g "less"="less -R"
+alias gledger="gpg --batch -d -q $LEDGER_FILE | ledger -f - "
 
 function pro {
 	cd ~/projects/$1
