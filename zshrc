@@ -46,7 +46,7 @@ PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:$HOME/local/andro
 # Aliases
 # ----------------------------------------------------------------------
 alias l='ls'
-alias ls='ls -G' # OSX only
+alias ls='ls --color=auto' # OSX only
 alias ll='ls -A'
 alias de='deactivate'
 alias rezsh='source ~/.zshrc'
