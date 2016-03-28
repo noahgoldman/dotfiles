@@ -151,3 +151,4 @@ endfunction
 
 " Ledger functionality
 au BufNewFile,BufRead *.ldg,*.ledger setf ledger | comp ledger
+let g:ledger_maxwidth = 80
