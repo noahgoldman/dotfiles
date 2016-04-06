@@ -93,6 +93,9 @@ endif
 au InsertEnter * match Bad /\s\+\%#\@<!$/
 au InsertLeave * match Bad /\s\+$/
 
+" Remove trailing whitespace on F5
+:nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='solarized'
