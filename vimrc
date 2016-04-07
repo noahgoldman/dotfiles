@@ -59,6 +59,10 @@ set ignorecase
 set smartcase
 set incsearch
 
+" General mappings
+let mapleader=","
+noremap <Leader>W :w !sudo tee % > /dev/null<cr>
+
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype haskell setlocal ts=4 sw=4 expandtab
 autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
@@ -94,7 +98,7 @@ au InsertEnter * match Bad /\s\+\%#\@<!$/
 au InsertLeave * match Bad /\s\+$/
 
 " Remove trailing whitespace on F5
-:nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
@@ -155,3 +159,6 @@ endfunction
 " Ledger functionality
 au BufNewFile,BufRead *.ldg,*.ledger setf ledger | comp ledger
 let g:ledger_maxwidth = 80
+au FileType ledger noremap <silent><buffer> <Leader>la :LedgerAlign<cr>
+au FileType ledger noremap <silent><buffer> <Leader>lt
+    \ :call ledger#transaction_state_toggle(line('.'), ' *!')<CR>
