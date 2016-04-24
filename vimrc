@@ -53,15 +53,20 @@ set nowrap
 set pastetoggle=<F2>
 set visualbell
 set title
+set showmatch
+set smarttab
 
 " Search settings
 set ignorecase
 set smartcase
 set incsearch
+set hlsearch
 
 " General mappings
 let mapleader=","
-noremap <Leader>W :w !sudo tee % > /dev/null<cr>
+nmap <Leader>W :w !sudo tee % > /dev/null<cr>
+nmap <silent> <Leader>ev :e $MYVIMRC<cr>
+nmap <silent> <Leader>sv :so $MYVIMRC<cr>
 
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype haskell setlocal ts=4 sw=4 expandtab
@@ -79,11 +84,11 @@ autocmd Filetype jade setlocal ts=2 sw=2 expandtab
 autocmd Filetype css setlocal ts=2 sw=2 expandtab
 autocmd Filetype puppet setlocal ts=2 sw=2 expandtab
 
-" Arduino detection
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 autocmd! BufNewFile,BufRead *.oz setlocal ft=oz
 autocmd! BufNewFile,BufRead *.salsa setlocal ft=java
 
+" Definition for red text coloring
 highlight Bad ctermbg=red ctermfg=white guibg=#592929
 
 " Highlight lines over 80 characters
@@ -114,10 +119,10 @@ nnoremap <C-S-H> :Hexmode<CR>
 inoremap <C-S-H> <ESC>:Hexmode<CR>
 vnoremap <C-S-H> :<C-U>Hexmode<CR>
 
-command -bar Hexmode call ToggleHex()
+command! -bar Hexmode call ToggleHex()
 
 " helper function to toggle hex mode
-function ToggleHex()
+function! ToggleHex()
   " hex mode should be considered a read-only operation
   " save values for modified and read-only for restoration later,
   " and clear the read-only flag for now

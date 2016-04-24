@@ -19,11 +19,17 @@ setopt correct_all
 # Load custom completions
 fpath=($HOME/.zsh/completion $fpath)
 
-#
-# Binds
-#
-
+# vi mode
 bindkey -v
+export KEYTIMEOUT=1
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg[red]%} [% NORMAL]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_prompt_string) $EPS1"
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 # ----------------------------------------------------------------------
 # Script to add everything in ~/local to PATH
@@ -64,7 +70,7 @@ alias -g "json"="python -mjson.tool"
 alias -g "sync-music"="rsync -rvhL ~/music"
 alias gsync='grive -p ~/gdrive'
 alias -g "less"="less -R"
-alias gledger="gpg --batch -d -q $LEDGER_FILE | ledger -f - "
+alias gledger="gpg --batch -d -q $GLEDGER_FILE | ledger -f - "
 
 function pro {
 	cd ~/projects/$1

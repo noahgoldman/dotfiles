@@ -1,4 +1,6 @@
-#!/usr/bin/env ruby
+#!/bin/bash
 
-price = `curl -s 'http://download.finance.yahoo.com/d/quotes.csv?s=#{ARGV[0]}&f=l1'`
-puts "$#{price}"
+quote=$(curl -s "http://download.finance.yahoo.com/d/quotes.csv?s=$1&f=l1")
+if [[ $quote =~ ^[0-9]+\.?[0-9]*$ ]] ; then
+    echo "$(date +%Y/%m/%d\ %H:%M:%s) $1 $quote"
+fi
