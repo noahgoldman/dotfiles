@@ -9,5 +9,5 @@
 [alias]
 	st = status
 	cm = commit
-	gh = push -u origin master
+	pm = push -u origin master
     rs = checkout HEAD

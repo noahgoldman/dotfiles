@@ -1,29 +1,24 @@
 set nocompatible
 
 "*******************
-" Vundle Section
+" vim-plug
 "*******************
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'wting/rust.vim'
-Plugin 'bling/vim-airline'
-Plugin 'kien/ctrlp.vim'
-Plugin 'puppetlabs/puppet-syntax-vim'
-Plugin 'fatih/vim-go'
-Plugin 'lervag/vimtex'
-Plugin 'ledger/vim-ledger'
-Plugin 'jamessan/vim-gnupg'
+Plug 'tpope/vim-surround'
+Plug 'altercation/vim-colors-solarized'
+Plug 'wting/rust.vim', {'for': 'rust'}
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'kien/ctrlp.vim'
+Plug 'puppetlabs/puppet-syntax-vim'
+Plug 'fatih/vim-go', {'for': 'go'}
+Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'ledger/vim-ledger'
+Plug 'jamessan/vim-gnupg'
 
-call vundle#end()
-filetype plugin indent on
-"*******************
-" End Vundle Section
-"*******************
+call plug#end()
+"******************
 
 syntax enable
 let &t_Co=256
