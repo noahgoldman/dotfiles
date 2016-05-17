@@ -16,6 +16,8 @@ Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'ledger/vim-ledger'
 Plug 'jamessan/vim-gnupg'
+Plug 'FooSoft/vim-argwrap'
+Plug 'tomtom/tcomment_vim'
 
 call plug#end()
 "******************
@@ -44,6 +46,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set number
+set relativenumber
 set nowrap
 set pastetoggle=<F2>
 set visualbell
@@ -62,6 +65,7 @@ let mapleader=","
 nmap <Leader>W :w !sudo tee % > /dev/null<cr>
 nmap <silent> <Leader>ev :e $MYVIMRC<cr>
 nmap <silent> <Leader>sv :so $MYVIMRC<cr>
+nmap <silent> <Leader>a :ArgWrap<cr>
 
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype haskell setlocal ts=4 sw=4 expandtab
