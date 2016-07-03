@@ -2,6 +2,13 @@
 	name = Noah Goldman
 	email = noahg34@gmail.com
 
+[emails]
+    email = ngoldman@quantcast.com
+    host = corp.qc
+
+[init]
+    templatedir = ~/.git/templates
+
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global

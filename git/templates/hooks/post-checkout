@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Get the matching patterns and emails
+IFS=$'\n' read -rd '' -a emails <<< "$(git config --get-all emails.email)"
+IFS=$'\n' read -rd '' -a hosts <<< "$(git config --get-all emails.host)"
+
+setIdentity()
+{
+    local email
+
+    current_email="$(git config --get user.email)"
+
+    new_email=("$@")
+
+    if [[ "${current_email}" != "${new_email}" ]]; then
+        printf "\nGit email set to: ${new_email}\n"
+        git config --local user.email "${new_email}"
+    fi
+
+    return 0
+}
+
+current_remote_url="$(git config --get --local remote.origin.url)"
+
+if [[ "$current_remote_url" ]]; then
+    counter=0
+    for service in "${hosts[@]}"; do
+        if [[ $current_remote_url =~ $service ]]; then
+            setIdentity "${emails[counter]}"
+        fi
+        let counter+=1
+    done
+fi
+
+exit 0
