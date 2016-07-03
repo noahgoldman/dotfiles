@@ -18,6 +18,7 @@ Plug 'ledger/vim-ledger'
 Plug 'jamessan/vim-gnupg'
 Plug 'FooSoft/vim-argwrap'
 Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 "******************
@@ -53,6 +54,7 @@ set visualbell
 set title
 set showmatch
 set smarttab
+set backspace=indent,eol,start
 
 " Search settings
 set ignorecase

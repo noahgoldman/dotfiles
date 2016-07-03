@@ -52,7 +52,7 @@ PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:$HOME/local/andro
 # Aliases
 # ----------------------------------------------------------------------
 alias l='ls'
-alias ls='ls --color=auto' # OSX only
+alias ls='ls -G'
 alias ll='ls -A'
 alias de='deactivate'
 alias rezsh='source ~/.zshrc'
@@ -121,3 +121,10 @@ VBOX_USB=usbfs
 export GOPATH=$HOME/projects/golang
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# For tag (https://github.com/aykamko/tag)
+
+if (( $+commands[tag] )); then
+    tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
+    alias ag=tag
+fi
