@@ -14,11 +14,14 @@ Plug 'kien/ctrlp.vim'
 Plug 'puppetlabs/puppet-syntax-vim'
 Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'lervag/vimtex', {'for': 'tex'}
-Plug 'ledger/vim-ledger'
+Plug 'ledger/vim-ledger', {'for': 'ledger'}
 Plug 'jamessan/vim-gnupg'
 Plug 'FooSoft/vim-argwrap'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
+Plug 'rking/ag.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
 
 call plug#end()
 "******************
@@ -114,6 +117,13 @@ let g:airline_powerline_fonts = 1
 " ctrlp
 " Ignore files in gitignore
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+" argwrap
+let g:argwrap_tail_comma = 1
+
+" vim-notes
+let g:notes_directories = ['~/notes']
+let g:notes_suffix = '.txt'
 
 " Hex editing
 nnoremap <C-S-H> :Hexmode<CR>
