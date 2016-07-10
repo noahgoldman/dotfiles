@@ -120,8 +120,6 @@ VBOX_USB=usbfs
 # Go settings
 export GOPATH=$HOME/projects/golang
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
 # For tag (https://github.com/aykamko/tag)
 
 if (( $+commands[tag] )); then

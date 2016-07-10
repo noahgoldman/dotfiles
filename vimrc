@@ -87,6 +87,7 @@ autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype jade setlocal ts=2 sw=2 expandtab
 autocmd Filetype css setlocal ts=2 sw=2 expandtab
 autocmd Filetype puppet setlocal ts=2 sw=2 expandtab
+autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
 
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 autocmd! BufNewFile,BufRead *.oz setlocal ft=oz
