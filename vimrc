@@ -8,8 +8,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'altercation/vim-colors-solarized'
 Plug 'wting/rust.vim', {'for': 'rust'}
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'kien/ctrlp.vim'
 Plug 'puppetlabs/puppet-syntax-vim'
 Plug 'fatih/vim-go', {'for': 'go'}
@@ -22,6 +20,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'rking/ag.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
+Plug 'bling/vim-bufferline'
+Plug 'saltstack/salt-vim'
 
 call plug#end()
 "******************
@@ -72,6 +72,13 @@ nmap <silent> <Leader>ev :e $MYVIMRC<cr>
 nmap <silent> <Leader>sv :so $MYVIMRC<cr>
 nmap <silent> <Leader>a :ArgWrap<cr>
 
+autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
+autocmd! BufNewFile,BufRead *.oz setlocal ft=oz
+autocmd! BufNewFile,BufRead *.salsa setlocal ft=java
+autocmd! BufNewFile,BufRead *.js6 setlocal ft=javascript
+autocmd! BufNewFile,BufRead *.jsx6 setlocal ft=javascript
+autocmd! BufNewFile,BufRead Dockerfile* setlocal ft=Dockerfile
+
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype haskell setlocal ts=4 sw=4 expandtab
 autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
@@ -86,12 +93,9 @@ autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype jade setlocal ts=2 sw=2 expandtab
 autocmd Filetype css setlocal ts=2 sw=2 expandtab
-autocmd Filetype puppet setlocal ts=2 sw=2 expandtab
+autocmd Filetype puppet setlocal ts=4 sw=4 expandtab
 autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
-
-autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
-autocmd! BufNewFile,BufRead *.oz setlocal ft=oz
-autocmd! BufNewFile,BufRead *.salsa setlocal ft=java
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
 
 " Definition for red text coloring
 highlight Bad ctermbg=red ctermfg=white guibg=#592929
@@ -109,11 +113,6 @@ au InsertLeave * match Bad /\s\+$/
 
 " Remove trailing whitespace on F5
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-
-" Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='solarized'
-let g:airline_powerline_fonts = 1
 
 " ctrlp
 " Ignore files in gitignore

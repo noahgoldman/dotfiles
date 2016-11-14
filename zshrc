@@ -70,7 +70,8 @@ alias -g "json"="python -mjson.tool"
 alias -g "sync-music"="rsync -rvhL ~/music"
 alias gsync='grive -p ~/gdrive'
 alias -g "less"="less -R"
-alias gledger="gpg --batch -d -q $GLEDGER_FILE | ledger -f - "
+alias gledger="gpg -d -q $LEDGER_FILE | ledger -f - "
+alias clip-json="pbpaste | json | pbcopy"
 
 function pro {
 	cd ~/projects/$1

@@ -18,3 +18,10 @@
 	cm = commit
 	pm = push -u origin master
     rs = checkout HEAD
+    rollback = reset --hard HEAD~1
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[push]
+	default = simple
