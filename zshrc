@@ -104,6 +104,8 @@ export HISTSIZE=5000
 export SAVEHIST=$HISTSIZE
 setopt incappendhistory
 setopt hist_ignore_all_dups
+bindkey -v
+bindkey '^R' history-incremental-search-backward
 
 unsetopt menu_complete
 unsetopt flowcontrol
@@ -127,3 +129,4 @@ if (( $+commands[tag] )); then
     tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
     alias ag=tag
 fi
+function gitignore() { curl -L -s https://www.gitignore.io/api/$@ ;}
