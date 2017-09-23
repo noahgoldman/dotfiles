@@ -72,6 +72,10 @@ alias gsync='grive -p ~/gdrive'
 alias -g "less"="less -R"
 alias gledger="gpg -d -q $LEDGER_FILE | ledger -f - "
 alias clip-json="pbpaste | json | pbcopy"
+alias docker-kill-all="docker kill $(docker ps -q)"
+
+# Disable spelling correction for certain commands
+alias go='nocorrect go'
 
 function pro {
 	cd ~/projects/$1
@@ -122,6 +126,7 @@ VBOX_USB=usbfs
 
 # Go settings
 export GOPATH=$HOME/projects/golang
+export PATH="$PATH:$GOPATH/bin"
 
 # For tag (https://github.com/aykamko/tag)
 

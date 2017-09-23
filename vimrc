@@ -7,7 +7,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-surround'
 Plug 'altercation/vim-colors-solarized'
-Plug 'wting/rust.vim', {'for': 'rust'}
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'kien/ctrlp.vim'
 Plug 'puppetlabs/puppet-syntax-vim'
 Plug 'fatih/vim-go', {'for': 'go'}
@@ -22,6 +22,9 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
 Plug 'bling/vim-bufferline'
 Plug 'saltstack/salt-vim'
+Plug 'hashivim/vim-terraform'
+Plug 'Matt-Deacalion/vim-systemd-syntax'
+Plug 'martinda/Jenkinsfile-vim-syntax'
 
 call plug#end()
 "******************
@@ -93,9 +96,10 @@ autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype jade setlocal ts=2 sw=2 expandtab
 autocmd Filetype css setlocal ts=2 sw=2 expandtab
-autocmd Filetype puppet setlocal ts=4 sw=4 expandtab
+autocmd Filetype puppet setlocal ts=2 sw=2 expandtab
 autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
+autocmd Filetype json setlocal ts=2 sw=2 expandtab
 
 " Definition for red text coloring
 highlight Bad ctermbg=red ctermfg=white guibg=#592929
@@ -178,3 +182,12 @@ let g:ledger_maxwidth = 80
 au FileType ledger noremap <silent><buffer> <Leader>la :LedgerAlign<cr>
 au FileType ledger noremap <silent><buffer> <Leader>lt
     \ :call ledger#transaction_state_toggle(line('.'), ' *!')<CR>
+
+" Terraform
+let g:terraform_fmt_on_save = 1
+
+" Run rustfmt automatically
+let g:rustfmt_autosave = 1
+
+" Enter a tab literal
+inoremap <S-Tab> <C-V><Tab>
