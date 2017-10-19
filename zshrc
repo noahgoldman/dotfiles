@@ -73,6 +73,7 @@ alias -g "less"="less -R"
 alias gledger="gpg -d -q $LEDGER_FILE | ledger -f - "
 alias clip-json="pbpaste | json | pbcopy"
 alias docker-kill-all="docker kill $(docker ps -q)"
+alias yaml2json="ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))'"
 
 # Disable spelling correction for certain commands
 alias go='nocorrect go'
@@ -129,9 +130,14 @@ export GOPATH=$HOME/projects/golang
 export PATH="$PATH:$GOPATH/bin"
 
 # For tag (https://github.com/aykamko/tag)
-
 if (( $+commands[tag] )); then
     tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
     alias ag=tag
 fi
+
 function gitignore() { curl -L -s https://www.gitignore.io/api/$@ ;}
+function gitignore-repo {
+    repo=$(git rev-parse --show-toplevel)
+    mkdir -p $repo/.git/info
+    echo "$1" >> $repo/.git/info/exclude
+}

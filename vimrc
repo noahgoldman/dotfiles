@@ -17,14 +17,15 @@ Plug 'jamessan/vim-gnupg'
 Plug 'FooSoft/vim-argwrap'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
-Plug 'rking/ag.vim'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc', {'on': 'Note'}
+Plug 'xolox/vim-notes', {'on': 'Note'}
 Plug 'bling/vim-bufferline'
 Plug 'saltstack/salt-vim'
 Plug 'hashivim/vim-terraform'
 Plug 'Matt-Deacalion/vim-systemd-syntax'
 Plug 'martinda/Jenkinsfile-vim-syntax'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
 
 call plug#end()
 "******************
