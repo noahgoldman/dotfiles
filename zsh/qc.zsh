@@ -6,4 +6,4 @@ alias check-js-pr="git diff-index --name-only master | grep '.*\.js' | xargs $(n
 alias recreate-db="rake db:drop && rake db:create && rake db:structure:load"
 alias docker-load-fixtures="docker-compose run --rm testing bash -l -c 'rake db:fixtures:load'"
 alias check-rb-pr="git diff-index --name-only master | grep '\.rb$' | xargs bundle exec rubocop"
-alias ecr-login="eval $(aws ecr get-login --no-include-email)"
+#alias ecr-login="eval $(aws ecr get-login --no-include-email)"

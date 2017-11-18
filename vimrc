@@ -9,7 +9,6 @@ Plug 'tpope/vim-surround'
 Plug 'altercation/vim-colors-solarized'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'kien/ctrlp.vim'
-Plug 'puppetlabs/puppet-syntax-vim'
 Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'ledger/vim-ledger', {'for': 'ledger'}
@@ -122,6 +121,11 @@ nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " ctrlp
 " Ignore files in gitignore
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+" Use ripgrep for searching if its available
+if executable('rg')
+    set grepprg=rg\ --color=never
+    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+endif
 
 " argwrap
 let g:argwrap_tail_comma = 1
