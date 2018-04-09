@@ -1,6 +1,7 @@
 [user]
 	name = Noah Goldman
 	email = noahg34@gmail.com
+	signingkey = noah@phaaze.com
 
 [emails]
     email = ngoldman@quantcast.com
@@ -14,11 +15,9 @@
     excludesfile = ~/.gitignore_global
 
 [alias]
-	st = status
-	cm = commit
-	pm = push -u origin master
     rs = checkout HEAD
     rollback = reset --hard HEAD~1
+    amend = commit --amend --no-edit
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f

@@ -24,7 +24,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'Matt-Deacalion/vim-systemd-syntax'
 Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
+Plug 'rodjek/vim-puppet', {'for': 'puppet'}
 
 call plug#end()
 "******************
@@ -34,10 +34,6 @@ let &t_Co=256
 let g:solarized_term = 1
 colorscheme solarized
 set background=dark
-
-"Vim-latex settings
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
 
 " Some nice filename tab completion
 set wildmode=longest,list,full
@@ -100,6 +96,7 @@ autocmd Filetype puppet setlocal ts=2 sw=2 expandtab
 autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 expandtab
+autocmd Filetype puppet setlocal ts=4 sw=4 expandtab
 
 " Definition for red text coloring
 highlight Bad ctermbg=red ctermfg=white guibg=#592929
@@ -189,7 +186,10 @@ au FileType ledger noremap <silent><buffer> <Leader>lt
     \ :call ledger#transaction_state_toggle(line('.'), ' *!')<CR>
 
 " Terraform
-let g:terraform_fmt_on_save = 1
+" let g:terraform_fmt_on_save = 1
+
+" Go
+let g:go_fmt_command = "goimports"
 
 " Run rustfmt automatically
 let g:rustfmt_autosave = 1

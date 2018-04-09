@@ -114,9 +114,9 @@ export PATH="$PATH:$GOPATH/bin"
 
 # For tag (https://github.com/aykamko/tag)
 if (( $+commands[tag] )); then
-  export TAG_SEARCH_PROG=ag
+  export TAG_SEARCH_PROG=rg
   tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
-  alias ag=tag
+  alias rg=tag
 fi
 
 function gitignore() { curl -L -s https://www.gitignore.io/api/$@ ;}
@@ -125,3 +125,6 @@ function gitignore-repo {
     mkdir -p $repo/.git/info
     echo "$1" >> $repo/.git/info/exclude
 }
+
+# Ripgrep configuration file
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
