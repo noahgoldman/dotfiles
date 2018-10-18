@@ -187,7 +187,7 @@ au FileType ledger noremap <silent><buffer> <Leader>lt
     \ :call ledger#transaction_state_toggle(line('.'), ' *!')<CR>
 
 " Terraform
-" let g:terraform_fmt_on_save = 1
+let g:terraform_fmt_on_save = 1
 
 " Go
 let g:go_fmt_command = "goimports"
