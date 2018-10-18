@@ -25,6 +25,7 @@ Plug 'Matt-Deacalion/vim-systemd-syntax'
 Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rodjek/vim-puppet', {'for': 'puppet'}
+Plug 'jparise/vim-graphql'
 
 call plug#end()
 "******************
