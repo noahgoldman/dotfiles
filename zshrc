@@ -69,6 +69,11 @@ alias gledger="gpg -d -q $LEDGER_FILE | ledger -f - "
 alias clip-json="pbpaste | json | pbcopy"
 alias docker-kill-all="docker kill $(docker ps -q)"
 alias yaml2json="ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))'"
+alias k="kubectl"
+alias kctx="kubectx"
+alias kns="kubens"
+alias ccat='pygmentize -f terminal256 -O style=native -g'
+alias -g stripcolor="$SED_BIN -r \"s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g\""
 
 # Disable spelling correction for certain commands
 alias go='nocorrect go'
@@ -106,17 +111,15 @@ autoload -U compinit
 compinit
 # End of lines added by compinstall
 
-VBOX_USB=usbfs
-
 # Go settings
 export GOPATH=$HOME/projects/golang
 export PATH="$PATH:$GOPATH/bin"
 
 # For tag (https://github.com/aykamko/tag)
 if (( $+commands[tag] )); then
-  export TAG_SEARCH_PROG=rg
+  export TAG_SEARCH_PROG=ag
   tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
-  alias rg=tag
+  alias ag=tag
 fi
 
 function gitignore() { curl -L -s https://www.gitignore.io/api/$@ ;}
