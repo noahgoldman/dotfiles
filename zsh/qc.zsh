@@ -6,4 +6,7 @@ alias check-js-pr="git diff-index --name-only master | grep '.*\.js' | xargs $(n
 alias recreate-db="rake db:drop && rake db:create && rake db:structure:load"
 alias docker-load-fixtures="docker-compose run --rm testing bash -l -c 'rake db:fixtures:load'"
 alias check-rb-pr="git diff-index --name-only master | grep '\.rb$' | xargs bundle exec rubocop"
-#alias ecr-login="eval $(aws ecr get-login --no-include-email)"
+alias aws-login="$HOME/projects/aws-tools/env/bin/python $HOME/projects/aws-tools/awstools/qc_aws_login.py -d 43200"
+alias ecr-login="eval $(aws ecr get-login --no-include-email)"
+alias -g parse-mc="python3 -c 'import sys; from datetime import datetime; parts = [int(s, 16) for s in sys.stdin.read().split(\"-\")]; print(f\"time={datetime.fromtimestamp(parts[0] + (parts[1] * 10**-6))}, r1={parts[2]}, r2={parts[3]}\")'"
+alias knodes="kubectl get nodes -Lbeta.kubernetes.io/instance-type,failure-domain.beta.kubernetes.io/zone --sort-by=.metadata.creationTimestamp"

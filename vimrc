@@ -26,6 +26,7 @@ Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rodjek/vim-puppet', {'for': 'puppet'}
 Plug 'jparise/vim-graphql'
+Plug 'luochen1990/rainbow'
 
 call plug#end()
 "******************
@@ -81,7 +82,6 @@ autocmd! BufNewFile,BufRead Dockerfile* setlocal ft=Dockerfile
 
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype haskell setlocal ts=4 sw=4 expandtab
-autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
 autocmd Filetype coffee setlocal ts=2 sw=2 expandtab
 autocmd Filetype c setlocal ts=8 sw=8 noexpandtab
 autocmd Filetype cpp setlocal ts=4 sw=4 expandtab
@@ -187,7 +187,7 @@ au FileType ledger noremap <silent><buffer> <Leader>lt
     \ :call ledger#transaction_state_toggle(line('.'), ' *!')<CR>
 
 " Terraform
-let g:terraform_fmt_on_save = 1
+" let g:terraform_fmt_on_save = 1
 
 " Go
 let g:go_fmt_command = "goimports"
@@ -197,3 +197,10 @@ let g:rustfmt_autosave = 1
 
 " Enter a tab literal
 inoremap <S-Tab> <C-V><Tab>
+
+" Multi-colored parentheses.
+let g:rainbow_active = 1
+
+" Insert a semicolon at the end of the line
+nnoremap <C-J> m`A;<ESC>``
+inoremap <C-J> <ESC>m`A;<ESC>``a

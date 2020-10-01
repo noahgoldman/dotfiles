@@ -74,6 +74,7 @@ alias kctx="kubectx"
 alias kns="kubens"
 alias ccat='pygmentize -f terminal256 -O style=native -g'
 alias -g stripcolor="$SED_BIN -r \"s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g\""
+alias -g uuid2base64="python -c 'import sys, base64, uuid; print(base64.b64encode(uuid.UUID(sys.stdin.read().rstrip()).bytes))'"
 
 # Disable spelling correction for certain commands
 alias go='nocorrect go'
