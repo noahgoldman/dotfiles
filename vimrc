@@ -26,7 +26,6 @@ Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rodjek/vim-puppet', {'for': 'puppet'}
 Plug 'jparise/vim-graphql'
-Plug 'luochen1990/rainbow'
 
 call plug#end()
 "******************
@@ -197,9 +196,6 @@ let g:rustfmt_autosave = 1
 
 " Enter a tab literal
 inoremap <S-Tab> <C-V><Tab>
-
-" Multi-colored parentheses.
-let g:rainbow_active = 1
 
 " Insert a semicolon at the end of the line
 nnoremap <C-J> m`A;<ESC>``

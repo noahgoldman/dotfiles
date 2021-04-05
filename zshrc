@@ -35,19 +35,19 @@ zle -N zle-keymap-select
 # Script to add everything in ~/local to PATH
 # ----------------------------------------------------------------------
 LOCAL_PATH=$HOME/local
-LD_LIBRARY_PATH="/opt/local/lib:/usr/local/lib:/usr/lib"
+LD_LIBRARY_PATH="/usr/local/lib:/usr/lib"
 if [ -d $HOME/local ]; then
     for i in $HOME/local/*; do
-        [ -d $i/bin ] && PATH="${i}/bin:${PATH}"
-        [ -d $i/sbin ] && PATH="${i}/sbin:${PATH}"
-        [ -d $i/include ] && CPATH="${i}/include:${CPATH}"
-        [ -d $i/lib ] && LD_LIBRARY_PATH="${i}/lib:${LD_LIBRARY_PATH}"
-        [ -d $i/lib/pkgconfig ] && PKG_CONFIG_PATH="${i}/lib/pkgconfig:${PKG_CONFIG_PATH}"
-        [ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
+        [ -d $i/bin ] && export PATH="${i}/bin:${PATH}"
+        [ -d $i/sbin ] && export PATH="${i}/sbin:${PATH}"
+        [ -d $i/include ] && export CPATH="${i}/include:${CPATH}"
+        [ -d $i/lib ] && export LD_LIBRARY_PATH="${i}/lib:${LD_LIBRARY_PATH}"
+        [ -d $i/lib/pkgconfig ] && export PKG_CONFIG_PATH="${i}/lib/pkgconfig:${PKG_CONFIG_PATH}"
+        [ -d $i/share/man ] && export MANPATH="${i}/share/man:${MANPATH}"
     done
 fi
 
-PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:$HOME/local/android/platform-tools:${PATH}"
+export PATH="$HOME/.bin:$HOME/.cabal/bin:$HOME/local/libmaple/arm/bin:$HOME/local/android/platform-tools:${PATH}"
 # ----------------------------------------------------------------------
 # Aliases
 # ----------------------------------------------------------------------
@@ -132,3 +132,11 @@ function gitignore-repo {
 
 # Ripgrep configuration file
 export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+
+# Allow clang to find shared libraries at build time.
+export LIBRARY_PATH=$LD_LIBRARY_PATH
+
+# Alias shared library lists on OSX
+if [[ $OSX ]]; then
+    # export DYLD_LIBRARY_PATH=$LD_LIBRARY_PATH
+fi
