@@ -40,16 +40,20 @@ parse_git_state() {
     GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
   fi
 
-  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
-  fi
+  # Disable certain states if there's a repository-local override for them.
+  # This should be used on massive repositories where "git diff" is slow.
+  if [[ "$(git config --bool zsh.complexGitPrompt)" != "false" ]]; then
+    if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+      GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
+    fi
 
-  if ! git diff --quiet 2> /dev/null; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
-  fi
+    if ! git diff --quiet 2> /dev/null; then
+      GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
+    fi
 
-  if ! git diff --cached --quiet 2> /dev/null; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
+    if ! git diff --cached --quiet 2> /dev/null; then
+      GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
+    fi
   fi
 
   if [[ -n $GIT_STATE ]]; then
