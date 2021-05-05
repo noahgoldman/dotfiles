@@ -3,12 +3,22 @@ set nocompatible
 "*******************
 " vim-plug
 "*******************
+
+" Download vim-plug if it isn't already present.
+" This has the nice benefit of allowing the plugin to not be vendored in
+" dotfiles repositories.
+let plug_src_path = '~/.vim/autoload/plug.vim'
+if empty(glob(plug_src_path))
+  silent execute '!curl -fLo ' . plug_src_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-surround'
 Plug 'altercation/vim-colors-solarized'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'ledger/vim-ledger', {'for': 'ledger'}
@@ -26,6 +36,8 @@ Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rodjek/vim-puppet', {'for': 'puppet'}
 Plug 'jparise/vim-graphql'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'google/vim-jsonnet'
 
 call plug#end()
 "******************

@@ -1,5 +1,6 @@
 vim/.netrwhist
 vim/bundle
+vim/autoload/plug.vim
 *.swp
 xmonad.hi
 xmonad.o

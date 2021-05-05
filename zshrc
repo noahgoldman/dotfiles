@@ -94,10 +94,14 @@ export BROWSER='chromium'
 
 # History file setup
 export HISTFILE=$HOME/.zsh_history
-export HISTSIZE=5000
-export SAVEHIST=$HISTSIZE
+# Store a lot of history in memory (100_000)
+export HISTSIZE=100000
+# Store even more history in the local file (1_000_000)
+export SAVEHIST=1000000
 setopt incappendhistory
 setopt hist_ignore_all_dups
+# Share history between terminal windows.
+setopt share_history
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
@@ -138,5 +142,5 @@ export LIBRARY_PATH=$LD_LIBRARY_PATH
 
 # Alias shared library lists on OSX
 if [[ $OSX ]]; then
-    # export DYLD_LIBRARY_PATH=$LD_LIBRARY_PATH
+    export DYLD_LIBRARY_PATH=$LD_LIBRARY_PATH
 fi
